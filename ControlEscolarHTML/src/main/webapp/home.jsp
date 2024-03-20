@@ -18,7 +18,7 @@
                 <td><a href="./crear.jsp" >Crear carrera</a></td>                
             </tr>
             <tr>
-                <td><a href="./listar.jsp" >Listar carreras</a></td>
+                <td><a href="./ListarServlet">Listar carreras</a></td>
             </tr>
             <tr>
                 <td><a href="./modificar.jsp" >Modificar carreras</a></td>

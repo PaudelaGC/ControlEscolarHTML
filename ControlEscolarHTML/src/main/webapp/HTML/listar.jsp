@@ -14,10 +14,13 @@
     <body>
         <h1>Lista de carreras</h1>
         <table>
-            <tr>
-                <td>${carrera1.getNombre()}</td>
-                <td><button>Borrar</button></td>
-            </tr>
+            <ul>
+                <% for (models.Carreras carreras : (java.util.ArrayList<models.Carreras>) request.getAttribute("carreras")){ %>
+                <li> <%= carreras.getNombre() %></li>
+                <% } %>
+                <td><button type="submit" value="${carrera1.getNombre()}">Borrar</button></td>
+                <a href="./HomeServlet">Listar carreras</a>
+            </ul>
         </table>
     </body>
 </html>
