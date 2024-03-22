@@ -13,5 +13,8 @@
     </head>
     <body>
         <h1>Crear carrera</h1>
+        <label for="name">Nombre carrera</label><br><!-- comment -->
+        <input type="text" name="name">
+        <input type="submit" value="name">
     </body>
 </html>

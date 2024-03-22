@@ -15,7 +15,7 @@
         <h1>Administrador de carreras</h1>
         <table>
             <tr>
-                <td><a href="./crear.jsp" >Crear carrera</a></td>                
+                <td><a href="./CreateServlet" >Crear carrera</a></td>                
             </tr>
             <tr>
                 <td><a href="./ListarServlet">Listar carreras</a></td>

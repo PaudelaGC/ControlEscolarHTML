@@ -1,21 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controllers;
 
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.Carreras;
-import DB.Connect;
-import DB.Querys;
-import java.util.ArrayList;
-import java.util.List;
 
-
-@WebServlet(name = "ListarServlet", urlPatterns = {"/ListarServlet"})
-public class ListarServlet extends HttpServlet {
+/**
+ *
+ * @author Mati
+ */
+@WebServlet(name = "CreateServlet", urlPatterns = {"/CreateServlet"})
+public class CreateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +33,6 @@ public class ListarServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,20 +49,11 @@ public class ListarServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        Connect conn = new Connect();
         
-        conn.startConnection();
-        Querys query = new Querys();
-        List<Carreras> carreras = query.mostrarCarreras();
-        request.setAttribute("carreras", carreras);
-        
-        for (int i = 0; i < carreras.size(); i++) {
-            String nombreCarrera = carreras.get(i).getNombre();
-            request.setAttribute("carrera", nombreCarrera);
-        }
-        
-        RequestDispatcher rd = request.getRequestDispatcher("HTML/listar.jsp");
-        rd.forward(request, response);        
+        String name = request.getParameter("name");
+        System.out.println(name);
+        RequestDispatcher rd = request.getRequestDispatcher("HTML/crear.jsp");
+        rd.forward(request, response);  
     }
 
     /**
@@ -75,6 +68,7 @@ public class ListarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**
@@ -82,10 +76,9 @@ public class ListarServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-
     @Override
     public String getServletInfo() {
         return "Short description";
-    } // </editor-fold>
+    }// </editor-fold>
 
 }
