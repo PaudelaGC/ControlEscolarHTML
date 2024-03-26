@@ -4,6 +4,7 @@
  */
 package controllers;
 
+import DB.Querys;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.Carreras;
 
 /**
  *
@@ -51,7 +53,6 @@ public class CreateServlet extends HttpServlet {
         
         
         String name = request.getParameter("name");
-        System.out.println(name);
         RequestDispatcher rd = request.getRequestDispatcher("HTML/crear.jsp");
         rd.forward(request, response);  
     }
@@ -69,6 +70,13 @@ public class CreateServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
+        String nuevaCarrera = request.getParameter("name");
+        Carreras carrera = new Carreras(nuevaCarrera);
+        Querys query = new Querys();
+        
+        query.añadirCarrera(carrera);
+        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+        rd.forward(request, response);  
     }
 
     /**

@@ -13,8 +13,10 @@
     </head>
     <body>
         <h1>Crear carrera</h1>
-        <label for="name">Nombre carrera</label><br><!-- comment -->
-        <input type="text" name="name">
-        <input type="submit" value="name">
+        <form action="./CreateServlet" method="post">
+            <label for="name">Nombre carrera</label><br>
+            <input type="text" name="name">
+            <input type="submit" value="Enviar">
+        </form>
     </body>
 </html>
