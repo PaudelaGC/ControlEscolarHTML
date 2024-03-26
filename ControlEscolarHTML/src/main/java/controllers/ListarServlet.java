@@ -1,5 +1,6 @@
 package controllers;
 
+import DAO.CarreraDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -9,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Carreras;
 import DB.Connect;
-import DB.Querys;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +50,8 @@ public class ListarServlet extends HttpServlet {
         Connect conn = new Connect();
         
         conn.startConnection();
-        Querys query = new Querys();
-        List<Carreras> carreras = query.mostrarCarreras();
+        CarreraDAO carreraDao = new CarreraDAO();
+        List<Carreras> carreras = carreraDao.mostrarCarreras();
         request.setAttribute("carreras", carreras);
         
         for (int i = 0; i < carreras.size(); i++) {

@@ -4,7 +4,7 @@
  */
 package controllers;
 
-import DB.Querys;
+import DAO.CarreraDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,9 +50,7 @@ public class CreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
-        String name = request.getParameter("name");
+                
         RequestDispatcher rd = request.getRequestDispatcher("HTML/crear.jsp");
         rd.forward(request, response);  
     }
@@ -72,9 +70,9 @@ public class CreateServlet extends HttpServlet {
         
         String nuevaCarrera = request.getParameter("name");
         Carreras carrera = new Carreras(nuevaCarrera);
-        Querys query = new Querys();
+        CarreraDAO carreraDao = new CarreraDAO();
         
-        query.añadirCarrera(carrera);
+        carreraDao.añadirCarrera(carrera);
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request, response);  
     }

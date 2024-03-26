@@ -18,8 +18,11 @@
                     <%= carreras.getNombre() %>
                 </td>
                 
-                <td>
-                    <button type="submit" value="<%= carreras.getNombre() %>">Borrar</button>
+                <td>    
+                    <form method="post">
+                        <input type="hidden" name="borrar" value="<%= carreras.getNombre() %>" />
+                        <button type="submit" name="borrar">Borrar</button>
+                    </form>
                 </td>
                
             <% } %>

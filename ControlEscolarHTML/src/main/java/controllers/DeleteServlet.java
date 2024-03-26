@@ -4,6 +4,8 @@
  */
 package controllers;
 
+import DAO.CarreraDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -32,25 +34,13 @@ public class DeleteServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doDelete(req, resp);
-        String nombre = req.getParameter("value");
-        Carreras carr = new Carreras();
+           
         
     }
     
@@ -83,6 +73,17 @@ public class DeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        String nombre = request.getParameter("borrar");
+        Carreras carrera = new Carreras(nombre);
+        
+        CarreraDAO carreraDao = new CarreraDAO();
+        carreraDao.eliminarCarrera(carrera);
+        
+        System.out.println(carrera.getNombre());
+        
+        RequestDispatcher rd = request.getRequestDispatcher("HTML/listar.jsp");
+        rd.forward(request, response);  
     }
 
     /**
