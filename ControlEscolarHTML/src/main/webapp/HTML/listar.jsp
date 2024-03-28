@@ -19,9 +19,16 @@
                 </td>
                 
                 <td>    
-                    <form method="post">
+                    <form action="./ModifyServlet" method="get">
+                        <input type="hidden" name="modify" value="<%= carreras.getNombre() %>" />
+                        <button type="submit" >Modificar</button>
+                    </form>
+                </td>
+                
+                <td>    
+                    <form action="./DeleteServlet" method="post">
                         <input type="hidden" name="borrar" value="<%= carreras.getNombre() %>" />
-                        <button type="submit" name="borrar">Borrar</button>
+                        <button type="submit" >Borrar</button>
                     </form>
                 </td>
                

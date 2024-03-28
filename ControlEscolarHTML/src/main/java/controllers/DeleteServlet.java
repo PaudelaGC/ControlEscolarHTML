@@ -36,16 +36,7 @@ public class DeleteServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
     }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
-           
-        
-    }
     
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -80,9 +71,7 @@ public class DeleteServlet extends HttpServlet {
         CarreraDAO carreraDao = new CarreraDAO();
         carreraDao.eliminarCarrera(carrera);
         
-        System.out.println(carrera.getNombre());
-        
-        RequestDispatcher rd = request.getRequestDispatcher("HTML/listar.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request, response);  
     }
 

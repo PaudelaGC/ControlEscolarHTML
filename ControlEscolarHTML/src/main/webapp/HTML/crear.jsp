@@ -1,9 +1,3 @@
-<%-- 
-    Document   : crear
-    Created on : 18 mar 2024, 13:23:48
-    Author     : Mati
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,5 +12,7 @@
             <input type="text" name="name">
             <input type="submit" value="Enviar">
         </form>
+        <p style="display:<%= request.getAttribute("display")%>">Carrera ya existente</p>
+        <a href="./HomeServlet">Volver</a>
     </body>
 </html>

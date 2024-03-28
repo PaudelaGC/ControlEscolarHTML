@@ -7,12 +7,13 @@ package controllers;
 import DAO.CarreraDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import models.Carreras;
 
 /**
@@ -21,7 +22,16 @@ import models.Carreras;
  */
 @WebServlet(name = "CreateServlet", urlPatterns = {"/CreateServlet"})
 public class CreateServlet extends HttpServlet {
-
+    
+    List<String> founds = new ArrayList<String>();
+    String founding = "";
+    
+    public CreateServlet(){
+        founds.add("flex");
+        founds.add("none");       
+    }
+        
+        
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,6 +44,9 @@ public class CreateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+         
+        founding = founds.get(1);
+        request.setAttribute("display", founding);
         
     }
 
@@ -71,10 +84,31 @@ public class CreateServlet extends HttpServlet {
         String nuevaCarrera = request.getParameter("name");
         Carreras carrera = new Carreras(nuevaCarrera);
         CarreraDAO carreraDao = new CarreraDAO();
+        List<Carreras> carreras = carreraDao.mostrarCarreras();
+        boolean found = false;
+        String nombreCarrera = "";
+                
+        for (int i = 0; i < carreras.size(); i++) {
+            nombreCarrera = carreras.get(i).getNombre();
+            if(nuevaCarrera.equals(nombreCarrera)){
+                found = true;
+            }                        
+        }
         
-        carreraDao.añadirCarrera(carrera);
-        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-        rd.forward(request, response);  
+        if(found){
+            founding = founds.get(0);
+            request.setAttribute("display", founding);
+            RequestDispatcher rd = request.getRequestDispatcher("HTML/crear.jsp");
+            rd.forward(request, response);
+        }else{
+            founding = founds.get(1);
+            request.setAttribute("display", founding);
+            request.setAttribute("carrera", nombreCarrera);
+            carreraDao.añadirCarrera(carrera);
+            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            rd.forward(request, response);  
+        }        
+        
     }
 
     /**

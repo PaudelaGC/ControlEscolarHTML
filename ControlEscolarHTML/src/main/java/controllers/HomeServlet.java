@@ -13,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import models.Carreras;
 
 /**
@@ -22,6 +24,14 @@ import models.Carreras;
 @WebServlet(name = "home", urlPatterns = {"/HomeServlet"})
 public class HomeServlet extends HttpServlet {
 
+    List<String> created = new ArrayList<String>();
+    String creating = "";
+    
+    public HomeServlet(){
+        created.add("flex");
+        created.add("none");       
+    }
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,6 +44,21 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        if(request.getParameter("display") == null){
+            creating = created.get(0);
+        }else{
+            String pp = request.getParameter("display");
+
+            if(pp.equals("flex")){
+                creating = created.get(0);
+                request.setAttribute("display", creating);
+            }else{
+                creating = created.get(1);
+                request.setAttribute("display", creating);
+            }      
+        }
+
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request, response);
     }

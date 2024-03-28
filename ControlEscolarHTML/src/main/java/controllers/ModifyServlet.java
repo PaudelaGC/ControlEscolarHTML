@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controllers;
 
 import DAO.CarreraDAO;
@@ -9,14 +13,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Carreras;
-import DB.Connect;
-import java.util.ArrayList;
-import java.util.List;
 
+@WebServlet(name = "ModifyServlet", urlPatterns = {"/ModifyServlet"})
+public class ModifyServlet extends HttpServlet {
 
-@WebServlet(name = "ListarServlet", urlPatterns = {"/ListarServlet"})
-public class ListarServlet extends HttpServlet {
-
+    Carreras oldCarrera = new Carreras();
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -29,8 +31,7 @@ public class ListarServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-            
+                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,17 +48,14 @@ public class ListarServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        CarreraDAO carreraDao = new CarreraDAO();
-        List<Carreras> carreras = carreraDao.mostrarCarreras();
-        request.setAttribute("carreras", carreras);
         
-        for (int i = 0; i < carreras.size(); i++) {
-            String nombreCarrera = carreras.get(i).getNombre();
-            request.setAttribute("carrera", nombreCarrera);
-        }
+        String oldName = request.getParameter("modify");
+        oldCarrera.setNombre(oldName);
         
-        RequestDispatcher rd = request.getRequestDispatcher("HTML/listar.jsp");
-        rd.forward(request, response);        
+        request.setAttribute("oldName", oldName);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("HTML/modify.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -72,6 +70,15 @@ public class ListarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        String newName = request.getParameter("name");
+        Carreras newCarrera = new Carreras(newName);
+        
+        CarreraDAO carreraDao = new CarreraDAO();        
+        carreraDao.actualizarCarrera(oldCarrera, newCarrera);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -79,10 +86,9 @@ public class ListarServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-
     @Override
     public String getServletInfo() {
         return "Short description";
-    } // </editor-fold>
+    }// </editor-fold>
 
 }

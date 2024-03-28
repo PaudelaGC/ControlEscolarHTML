@@ -20,9 +20,7 @@
             <tr>
                 <td><a href="./ListarServlet">Listar carreras</a></td>
             </tr>
-            <tr>
-                <td><a href="./modificar.jsp" >Modificar carreras</a></td>
-            </tr>
-        </table>        
+        </table>     
+        <p style="display:<%= request.getAttribute("display")%>">Carrera creada!</p>
     </body>
 </html>
