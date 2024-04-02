@@ -12,12 +12,23 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import models.Carreras;
 
 @WebServlet(name = "ModifyServlet", urlPatterns = {"/ModifyServlet"})
 public class ModifyServlet extends HttpServlet {
 
     Carreras oldCarrera = new Carreras();
+    
+    List<String> show = new ArrayList<String>();
+    String oldName = "";
+    
+    public ModifyServlet(){
+        show.add("flex");
+        show.add("none");       
+        
+    }
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +42,12 @@ public class ModifyServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                
+           
+        if(request.getParameter("display") == null){
+            request.setAttribute("display", show.get(1));
+        }else{
+            request.setAttribute("display", show.get(0));
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,7 +65,7 @@ public class ModifyServlet extends HttpServlet {
         processRequest(request, response);
         
         
-        String oldName = request.getParameter("modify");
+        oldName = request.getParameter("modify");
         oldCarrera.setNombre(oldName);
         
         request.setAttribute("oldName", oldName);
@@ -75,9 +91,33 @@ public class ModifyServlet extends HttpServlet {
         Carreras newCarrera = new Carreras(newName);
         
         CarreraDAO carreraDao = new CarreraDAO();        
-        carreraDao.actualizarCarrera(oldCarrera, newCarrera);
+        List<Carreras> carreras = carreraDao.mostrarCarreras();
+        boolean found = false;
+        String nombreCarrera = "";        
+        
+        for (int i = 0; i < carreras.size(); i++) {
+            nombreCarrera = carreras.get(i).getNombre();
+            if(newName.equals(nombreCarrera)){
+                found = true;
+            }                        
+        }
+        
+        if(found){
+            request.setAttribute("display", show.get(0));
+            RequestDispatcher rd = request.getRequestDispatcher("HTML/modify.jsp");
+            request.setAttribute("oldName", oldName);
+            rd.forward(request, response);
+        }else{
+            request.setAttribute("carrera", nombreCarrera);
+            carreraDao.actualizarCarrera(oldCarrera, newCarrera);
+            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            request.setAttribute("display", show.get(0));
+            request.setAttribute("content", "Carrera " + oldName + " modificada a: " + newName);   
+            rd.forward(request, response);  
+        }      
         
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+
         rd.forward(request, response);
     }
 

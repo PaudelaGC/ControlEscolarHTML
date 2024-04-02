@@ -21,6 +21,6 @@
                 <td><a href="./ListarServlet">Listar carreras</a></td>
             </tr>
         </table>     
-        <p style="display:<%= request.getAttribute("display")%>">Carrera creada!</p>
+        <p style="display:<%= request.getAttribute("display")%>"><%= request.getAttribute("content")%></p>
     </body>
 </html>

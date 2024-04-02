@@ -14,6 +14,8 @@
             <input type="text" name="name">
             <input type="submit" value="Send">
         </form>
+                <p style="display:<%= request.getAttribute("display")%>">Carrera ya existente</p>
+
         <a href="./ListarServlet">Volver</a>
     </body>
 </html>

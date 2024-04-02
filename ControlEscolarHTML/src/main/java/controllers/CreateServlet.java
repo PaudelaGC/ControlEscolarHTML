@@ -23,15 +23,14 @@ import models.Carreras;
 @WebServlet(name = "CreateServlet", urlPatterns = {"/CreateServlet"})
 public class CreateServlet extends HttpServlet {
     
-    List<String> founds = new ArrayList<String>();
-    String founding = "";
+    List<String> show = new ArrayList<String>();
     
     public CreateServlet(){
-        founds.add("flex");
-        founds.add("none");       
+        show.add("flex");
+        show.add("none");       
+        
     }
-        
-        
+            
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,8 +44,11 @@ public class CreateServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          
-        founding = founds.get(1);
-        request.setAttribute("display", founding);
+        if(request.getParameter("display") == null){
+            request.setAttribute("display", show.get(1));
+        }else{
+            request.setAttribute("display", show.get(0));
+        }
         
     }
 
@@ -96,16 +98,14 @@ public class CreateServlet extends HttpServlet {
         }
         
         if(found){
-            founding = founds.get(0);
-            request.setAttribute("display", founding);
+            request.setAttribute("display", show.get(0));
             RequestDispatcher rd = request.getRequestDispatcher("HTML/crear.jsp");
             rd.forward(request, response);
         }else{
-            founding = founds.get(1);
-            request.setAttribute("display", founding);
-            request.setAttribute("carrera", nombreCarrera);
             carreraDao.añadirCarrera(carrera);
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            request.setAttribute("display", show.get(0));
+            request.setAttribute("content", "Carrera " + nuevaCarrera + " creada!");
             rd.forward(request, response);  
         }        
         

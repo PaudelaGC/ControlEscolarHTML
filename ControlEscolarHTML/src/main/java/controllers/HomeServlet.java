@@ -24,12 +24,12 @@ import models.Carreras;
 @WebServlet(name = "home", urlPatterns = {"/HomeServlet"})
 public class HomeServlet extends HttpServlet {
 
-    List<String> created = new ArrayList<String>();
-    String creating = "";
+    List<String> show = new ArrayList<String>();
     
     public HomeServlet(){
-        created.add("flex");
-        created.add("none");       
+        show.add("flex");
+        show.add("none");       
+        
     }
     
     /**
@@ -45,18 +45,12 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        
+        
         if(request.getParameter("display") == null){
-            creating = created.get(0);
+            request.setAttribute("display", show.get(1));
         }else{
-            String pp = request.getParameter("display");
-
-            if(pp.equals("flex")){
-                creating = created.get(0);
-                request.setAttribute("display", creating);
-            }else{
-                creating = created.get(1);
-                request.setAttribute("display", creating);
-            }      
+            request.setAttribute("display", show.get(0));
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
@@ -91,12 +85,6 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        PrintWriter salida = response.getWriter();
-        
-        //if(request.getParameter("listar").equals(request))){
-            
-        //response.sendRedirect("/listar.jsp");
-        //}
     }
 
     /**
